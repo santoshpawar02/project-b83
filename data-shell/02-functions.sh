@@ -15,3 +15,4 @@ example () {
 
 a=10
 example
+
