@@ -57,3 +57,32 @@ echo First argument is $1
 # x2 - 200              <----- 2 approches - variables are set to value outside of script by x2=200
 # First argument is 300 <----- 3 approches - variables are set to value after script and outside script 
 
+
+# Redirectors 
+# Input Redirectors (<)
+# Output Redirectors (>)
+# Output Appenders  (>>)
+# BOTH (output & error) (&>)
+# Output compraise of both Output and Errors, If we want BOTH (output & error) to same file then &> will be used 
+
+
+
+####    Exit status
+# exit status is a number which is returned by a command after execution
+# if it ranges from 0-255
+# where 0 is successful and non 0 is error/ failure or partial failure 
+# to get this value we use echo $? 
+
+
+# Dynamic Variables 
+# 1. Command substitute 
+# syntax var=$(command)
+#   
+DATE=$(date)
+echo Date - $DATE
+
+# 2. Arithemetic substitute
+# syntax var=$(( arithemetic expression))
+
+ADD=$((2+5)) 
+echo add of 2+5 is $ADD

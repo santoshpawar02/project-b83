@@ -41,3 +41,16 @@ example2_RHS() {
 }
 
 example2_RHS 300
+
+# [ root@ip-172-31-28-74 ~/project-b83/data-shell ]# sh 02-functions.sh
+# example function
+# value of a is 10
+# value of y - 200
+# First argument - 300
+
+# Input argument
+# script 100 200
+# $1 - 100
+# $2 - 200
+# $# - 2 (number of arguments)
+# $* - 100 200 30.. ... (all the arguments) 
