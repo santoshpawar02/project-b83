@@ -38,7 +38,6 @@ echo x2 - $x2
 # 140689            <----- 1 approches - variables are set to value in script only
 # x1 - 100          <----- 2 approches - variables are set to value outside of script by export command x1=100
 # x2 - 200          <----- 2 approches - variables are set to value outside of script by x2=200
-# x3 -
 
 
 # Above 2 approches we needs to exclusivly declare variable name and thier data
@@ -51,4 +50,10 @@ echo x2 - $x2
 # variable 1 - 300 can be accessed by $1 
 
 echo First argument is $1
+
+# [ root@ip-172-31-28-74 ~/project-b83/data-shell ]# x2=200 sh 01-variables.sh 300
+# 140689                <----- 1 approches - variables are set to value in script only
+# x1 - 100              <----- 1 approches - variables are set to value outside of script by export command x1=100
+# x2 - 200              <----- 2 approches - variables are set to value outside of script by x2=200
+# First argument is 300 <----- 3 approches - variables are set to value after script and outside script 
 
