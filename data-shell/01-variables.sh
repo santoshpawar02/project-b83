@@ -34,6 +34,21 @@ echo x1 - $x1
 # x2=200 script
 echo x2 - $x2
 
+# [ root@ip-172-31-28-74 ~/project-b83/data-shell ]# x2=200 sh 01-variables.sh
+# 140689            <----- 1 approches - variables are set to value in script only
+# x1 - 100          <----- 2 approches - variables are set to value outside of script by export command x1=100
+# x2 - 200          <----- 2 approches - variables are set to value outside of script by x2=200
+# x3 -
+
+
+# Above 2 approches we needs to exclusivly declare variable name and thier data
+# In case we just pass the value but some variables should be assigned the value automaticly 
+# then RHS is the approch
+
 # RHS
 # script 300
-echo x3 - $x3
+# here variables will be assigned automaticaly based on positioning 
+# variable 1 - 300 can be accessed by $1 
+
+echo First argument is $1
+
