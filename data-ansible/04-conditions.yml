@@ -1,0 +1,225 @@
+# Conditons in Ansible allow you to control the execution of tasks based on certain criteria. 
+# You can use conditions to determine whether a task should run or be skipped, 
+#  depending on the values of variables, facts, or other conditions.
+
+
+# Below are some examples of conditions in Ansible:
+- name: Run a task only if a variable is defined
+  hosts: localhost
+  vars:
+    my_variable: "Hello, Ansible!"
+  tasks:
+    - name: Print a message if my_variable is defined
+      debug:
+        msg: "{{ my_variable }}"
+      when: my_variable is defined
+
+- name: Run a task only if a variable is not defined
+  hosts: localhost
+  tasks:
+    - name: Print a message if my_variable is not defined
+      debug:
+        msg: "my_variable is not defined"
+      when: my_variable is not defined
+
+- name: Run a task only if a variable is equal to a specific value
+  hosts: localhost
+  vars:
+    my_variable: "Hello, Ansible!"
+  tasks:
+    - name: Print a message if my_variable is equal to "Hello, Ansible!"
+      debug:
+        msg: "my_variable is equal to 'Hello, Ansible!'"
+      when: my_variable == "Hello, Ansible!"
+
+- name: Condition demo
+  hosts: localhost
+  vars:
+    my_variable: "Hello, Ansible!"
+  tasks:
+    - name: Print a message if my_variable is equal to "Hello, Ansible!"
+      debug:
+        msg: "my_variable is equal to 'Hello, Ansible!'"
+      when: my_variable == "Hello, Ansible!"
+
+    - name: Print a message if my_variable is not equal to "Goodbye, Ansible!"
+      debug:
+        msg: "my_variable is not equal to 'Goodbye, Ansible!'"
+      when: my_variable != "Goodbye, Ansible!"
+
+    - name: Print a message if my_variable is in a list of values
+      debug:
+        msg: "my_variable is in the list of values"
+      when: my_variable in ["Hello, Ansible!", "Hi, Ansible!"]
+
+    - name: Print a message if my_variable is not in a list of values
+      debug:
+        msg: "my_variable is not in the list of values"
+      when: my_variable not in ["Goodbye, Ansible!", "Bye, Ansible!"]
+
+
+- name: Condition demo
+  hosts: localhost
+  tasks:
+  - name: X is greater than 10
+    debug:
+      msg: "X is greater than 10"
+    when: x > 10
+    - name: X is less than or equal to 10 
+    debug:
+      msg: "X is less than or equal to 10"
+    when: x <= 10     
+    - name: X is equal to 10
+    debug:
+      msg: "X is equal to 10"
+    when: x == 10 
+    - name: X is not equal to 10
+    debug:  
+      msg: "X is not equal to 10"
+    when: x != 10
+
+
+# In addition to the above examples, you can also use conditions with loops,
+#  register variables, and other Ansible features to create more complex playbooks. 
+
+- name: Condition demo
+  hosts: localhost
+  vars:
+    x: 15
+  tasks:
+    - name: Print a message if x is greater than 10
+      debug:
+        msg: "x is greater than 10"
+      when: x > 10
+
+    - name: Print a message if x is less than or equal to 10
+      debug:
+        msg: "x is less than or equal to 10"
+      when: x <= 10
+
+    - name: Print a message if x is equal to 10
+      debug:
+        msg: "x is equal to 10"
+      when: x == 10
+
+    - name: Print a message if x is not equal to 10
+      debug:
+        msg: "x is not equal to 10"
+      when: x != 10
+
+
+# In addition to the above examples, you can also use conditions with loops, register variables, and other Ansible features to create more complex playbooks.
+# below is an example of using conditions with loops:   
+- name: Condition demo with loops
+  hosts: localhost
+  vars:
+    my_list:
+      - "Hello, Ansible!"
+      - "Hi, Ansible!"
+      - "Goodbye, Ansible!"
+  tasks:
+    - name: Print a message for each item in my_list if it contains "Ansible"
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ my_list }}"
+      when: "'Ansible' in item"      
+
+# In when condition, you can also use logical operators such as "and" and "or" to combine multiple conditions.
+# Below is an example of using logical operators in a when condition:
+- name: Condition demo with logical operators
+  hosts: localhost
+  vars:
+    x: 15
+    y: 5
+  tasks:
+    - name: Print a message if x is greater than 10 and y is less than 10
+      debug:
+        msg: "x is greater than 10 and y is less than 10"
+      when: x > 10 and y < 10
+
+    - name: Print a message if x is less than or equal to 10 or y is greater than or equal to 5
+      debug:
+        msg: "x is less than or equal to 10 or y is greater than or equal to 5"
+      when: x <= 10 or y >= 5
+
+
+# In when condition, you can also use the "not" operator to negate a condition.
+# Below is an example of using the "not" operator in a when condition:  
+- name: Condition demo with "not" operator
+  hosts: localhost
+  vars:
+    my_variable: "Hello, Ansible!"
+  tasks:
+    - name: Print a message if my_variable is not equal to "Goodbye, Ansible!"
+      debug:
+        msg: "my_variable is not equal to 'Goodbye, Ansible!'"
+      when: not (my_variable == "Goodbye, Ansible!")      
+
+# In when condition variable can be used to check if a variable is defined or not.
+# Below is an example of using the "defined" operator in a when condition:
+- name: Condition demo with "defined" operator
+  hosts: localhost
+  vars:
+    my_variable: "Hello, Ansible!"
+  tasks:
+    - name: Print a message if my_variable is defined
+      debug:
+        msg: "my_variable is defined"
+      when: my_variable is defined
+
+    - name: Print a message if my_variable is not defined
+      debug:
+        msg: "my_variable is not defined"
+      when: my_variable is not defined
+
+
+# In when condition variable does not require flower brackets {{ }} to be used.      
+# Below is an example of using a variable in a when condition without flower brackets:
+- name: Condition demo without flower brackets
+  hosts: localhost
+  vars:
+    my_variable: "Hello, Ansible!"
+  tasks:
+    - name: Print a message if my_variable is equal to "Hello, Ansible!"
+      debug:
+        msg: "my_variable is equal to 'Hello, Ansible!'"
+      when: my_variable == "Hello, Ansible!"
+
+    - name: Print a message if my_variable is not equal to "Goodbye, Ansible!"
+      debug:
+        msg: "my_variable is not equal to 'Goodbye, Ansible!'"
+      when: my_variable != "Goodbye, Ansible!"
+
+
+# Boolean variables can also be used in when conditions to control the execution of tasks.
+- name: Condition demo with boolean variables
+  hosts: localhost
+  vars:
+    my_boolean_variable: true
+  tasks:
+    - name: Print a message if my_boolean_variable is true
+      debug:
+        msg: "my_boolean_variable is true"
+      when: my_boolean_variable
+
+    - name: Print a message if my_boolean_variable is false
+      debug:
+        msg: "my_boolean_variable is false"
+      when: not my_boolean_variable
+
+# Boolean conditions can also be combined with other conditions using logical operators.
+- name: Condition demo with boolean variables and logical operators
+  hosts: localhost
+  vars:
+    my_boolean_variable: true
+    my_variable: "Hello, Ansible!"
+  tasks:
+    - name: Print a message if my_boolean_variable is true and my_variable is equal to "Hello, Ansible!"
+      debug:
+        msg: "my_boolean_variable is true and my_variable is equal to 'Hello, Ansible!'"
+      when: my_boolean_variable and my_variable == "Hello, Ansible!"
+
+    - name: Print a message if my_boolean_variable is false or my_variable is not equal to "Goodbye, Ansible!"
+      debug:
+        msg: "my_boolean_variable is false or my_variable is not equal to 'Goodbye, Ansible!'"
+      when: not my_boolean_variable or my_variable != "Goodbye, Ansible!"      

@@ -66,3 +66,113 @@
 # Example of dictionary variable: messages: { message1: "Hello, Ansible!", message2: "Hello, Ansible!" }
 # Example of variable with jinja2 expression: message: "{{ ansible_hostname }}"
 # Example of variable with jinja2 expression and filter: message: "{{ ansible_hostname | upper }}"
+
+- name : Print a Fact variable
+  hosts: localhost
+  tasks:
+    - name: Print a message
+      debug:
+        msg: "Hello, Ansible! Hostname is {{ ansible_hostname }}"
+
+- name: Print a Fact variable with filter
+  hosts: localhost
+  tasks:
+    - name: Print a message
+      debug:
+        msg: "Hello, Ansible! Hostname is {{ ansible_hostname | upper }}"
+
+
+- name: Print a Fact variable with filter and default value
+  hosts: localhost
+  tasks:
+    - name: Print a message
+      debug:
+        msg: "Hello, Ansible! Hostname is {{ ansible_hostname | default('localhost') | upper }}"
+
+- name: Print simple static variable example
+  hosts: localhost
+  vars:
+    message: "Hello, Ansible! this is a static variable example."
+  tasks:
+    - name: Print a message
+      debug:
+        msg: "{{ message }}" 
+
+- name: Print simple dynamic variable example
+  hosts: localhost
+  vars:
+    message: "Hello, Ansible! this is a dynamic variable example. Hostname is {{ ansible_hostname }}."
+  tasks:
+    - name: Print a message
+      debug:
+        msg: "{{ message }}"        
+
+- name: Print simple list variable example
+  hosts: localhost
+  vars:
+    messages:
+      - "Hello, Ansible! this is a list variable example."
+      - "Hello, Ansible! this is a list variable example. Hostname is {{ ansible_hostname }}."
+  tasks:
+    - name: Print a message
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ messages }}"
+
+- name: Print simple map variable example
+  hosts: localhost
+  vars:
+    messages:
+      message1: "Hello, Ansible! this is a map variable example."
+      message2: "Hello, Ansible! this is a map variable example. Hostname is {{ ansible_hostname }}."
+  tasks:
+    - name: Print a message
+      debug:
+        msg: "{{ item.value }}"
+      loop: "{{ messages | dict2items }}"              
+
+# Below example
+- name: Print Normal, List and Map variable example
+  hosts: localhost
+  vars:
+    message: "Hello, Ansible! this is a normal variable example."
+    messages_list:
+      - "Hello, Ansible! this is a list variable example."
+      - "Hello, Ansible! this is a list variable example. Hostname is {{ ansible_hostname }}."
+    messages_map:
+      message1: "Hello, Ansible! this is a map variable example."
+      message2: "Hello, Ansible! this is a map variable example. Hostname is {{ ansible_hostname }}."
+  tasks:
+    - name: Print a normal variable
+      debug:
+        msg: "{{ message }}"
+    - name: Print a list variable
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ messages_list }}"
+    - name: Print a map variable
+      debug:
+        msg: "{{ item.value }}"
+      loop: "{{ messages_map | dict2items }}"
+
+# Below example shows how to use ansible built-in date variable to get current date and print it using debug module.
+- name: Print date variable example
+  hosts: localhost
+  vars:
+    current_date: "{{ ansible_date_time.date }}"
+  tasks:
+    - name: Print a message
+      debug:
+        msg: "Hello, Ansible! Current date is {{ current_date }}"
+
+# below example shows how to use ansible built-in shell module to get uptime of the host and print it using debug module.
+- name : Print uptime variable from builtin shell module
+  hosts: localhost
+  tasks:
+    - name: Get uptime
+      shell: uptime
+      register: uptime_output
+
+    - name: Print uptime
+      debug:
+        msg: "Hello, Ansible! Uptime is {{ uptime_output.stdout }}"
