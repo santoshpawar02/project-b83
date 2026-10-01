@@ -1,0 +1,107 @@
+# Tags in Ansible
+# Tags are used to selectively run or skip tasks in an Ansible playbook.
+# You can assign tags to tasks, roles, or entire playbooks, and then use the --tags or --skip-tags options when running ansible-playbook to control which tasks are executed. 
+# Example: ansible-playbook playbook.yml --tags "tag1,tag2" or ansible-playbook playbook.yml --skip-tags "tag3,tag4"
+# below are some examples of using tags in Ansible:
+- name: Sample playbook with tags
+  hosts: localhost
+  tasks:
+    - name: Task 1 with tag1
+      debug:
+        msg: "This is task 1 with tag1"
+      tags:
+        - tag1
+
+    - name: Task 2 with tag2
+      debug:
+        msg: "This is task 2 with tag2"
+      tags:
+        - tag2
+
+    - name: Task 3 with tag1 and tag2
+      debug:
+        msg: "This is task 3 with tag1 and tag2"
+      tags:
+        - tag1
+        - tag2
+
+    - name: Task 4 without any tags
+      debug:
+        msg: "This is task 4 without any tags"
+
+# You can also assign tags to roles or entire playbooks.
+- name: Sample playbook with role and playbook tags
+  hosts: localhost
+  roles:
+    - role: demo
+      tags:
+        - role_tag
+
+  tags:
+    - playbook_tag
+
+# You can also use tags to skip tasks or roles in a playbook.
+- name: Sample playbook with skip tags
+  hosts: localhost
+  tasks:
+    - name: Task 1 with tag1
+      debug:
+        msg: "This is task 1 with tag1"
+      tags:
+        - tag1
+
+    - name: Task 2 with tag2
+      debug:
+        msg: "This is task 2 with tag2"
+      tags:
+        - tag2
+
+    - name: Task 3 with tag1 and tag2
+      debug:
+        msg: "This is task 3 with tag1 and tag2"
+      tags:
+        - tag1
+        - tag2
+
+    - name: Task 4 without any tags
+      debug:
+        msg: "This is task 4 without any tags"     
+
+# Few important points about tags in Ansible:
+# 1. Tags can be assigned to tasks, roles, or entire playbooks.
+# 2. You can use the --tags or --skip-tags options when running ansible-playbook to control which tasks are executed.
+# 3. If a task has multiple tags, it will be executed if any of the specified tags are matched. 
+# 4. If a task has no tags, it will be executed unless the --skip-tags option is used to skip it.
+# 5. You can also use tags to skip tasks or roles in a playbook.
+# Some best practices for using tags in Ansible:
+# 1. Use tags to group related tasks together, so that you can easily run or skip them as needed.
+# 2. Use descriptive tag names that clearly indicate the purpose of the task or role. 
+# 3. Avoid using too many tags, as this can make it difficult to manage and understand the playbook.
+# Few Complex examples of using tags in Ansible are below:
+- name: Sample playbook with complex tags
+  hosts: localhost
+  tasks:
+    - name: Task 1 with tag1 and tag2
+      debug:
+        msg: "This is task 1 with tag1 and tag2"
+      tags:
+        - tag1
+        - tag2
+
+    - name: Task 2 with tag2 and tag3
+      debug:
+        msg: "This is task 2 with tag2 and tag3"
+      tags:
+        - tag2
+        - tag3
+
+    - name: Task 3 with tag1 and tag3
+      debug:
+        msg: "This is task 3 with tag1 and tag3"
+      tags:
+        - tag1
+        - tag3
+
+    - name: Task 4 without any tags
+      debug:
+        msg: "This is task 4 without any tags"
