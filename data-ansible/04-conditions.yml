@@ -58,25 +58,25 @@
       when: my_variable not in ["Goodbye, Ansible!", "Bye, Ansible!"]
 
 
-- name: Condition demo
-  hosts: localhost
-  tasks:
-  - name: X is greater than 10
-    debug:
-      msg: "X is greater than 10"
-    when: x > 10
-    - name: X is less than or equal to 10 
-    debug:
-      msg: "X is less than or equal to 10"
-    when: x <= 10     
-    - name: X is equal to 10
-    debug:
-      msg: "X is equal to 10"
-    when: x == 10 
-    - name: X is not equal to 10
-    debug:  
-      msg: "X is not equal to 10"
-    when: x != 10
+# - name: Condition demo
+#   hosts: localhost
+#   tasks:
+#   - name: X is greater than 10
+#     debug:
+#       msg: "X is greater than 10"
+#     when: x > 10
+#     - name: X is less than or equal to 10 
+#     debug:
+#       msg: "X is less than or equal to 10"
+#     when: x <= 10     
+#     - name: X is equal to 10
+#     debug:
+#       msg: "X is equal to 10"
+#     when: x == 10 
+#     - name: X is not equal to 10
+#     debug:  
+#       msg: "X is not equal to 10"
+#     when: x != 10
 
 
 # In addition to the above examples, you can also use conditions with loops,
