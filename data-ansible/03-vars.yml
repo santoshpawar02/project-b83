@@ -1,7 +1,7 @@
 - name: Play variables
   hosts: localhost
   vars:
-    message: "Hello, Ansible!"
+    message: "Hello, Ansible Play variable!"
   tasks:
     - name: Print a message
       debug:
@@ -29,7 +29,7 @@
       debug:
         msg: "{{ message }}"
       vars:
-        message: "Hello, Ansible!"
+        message: "Hello, Ansible Task variable!"
 
 # This variable is defined at the task level and is only available within this task.
 
