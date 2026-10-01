@@ -1,0 +1,40 @@
+- name: Play variables
+  hosts: localhost
+  vars:
+    message: "Hello, Ansible!"
+  tasks:
+    - name: Print a message
+      debug:
+        msg: "{{ message }}"
+
+
+# In ansible, variables can be defined at different levels, playbook level, task level, role level, or inventory level. 
+# This example, we define variable called `message` at playbook level and used in task to print message using the `debug` module. 
+# if value is not defined at playbook level, ansible will look for the variable in role level and then inventory level.
+# if value is variable or starts with `{{` and ends with `}}`, ansible will treat it as a variable and will look 
+# for the value of the variable in the defined levels.
+# key: "message" is the variable name and value is "Hello, Ansible!" which is a string.
+# key: "msg" is the parameter of the debug module which is used to print the message.
+# key: "{{ value }}" is the syntax to access the value of the variable defined at playbook level.
+# key: "{{ value }} some other string" access the value of the variable at playbook level and concatenate it with some other string.
+# key: "{{ value | default('default value') }}" access the value of the variable at playbook level and if it is not defined, it will use the default value.
+# key: "{{ value | default('default value') | upper }}" access the value of the variable at playbook level and if it is not defined, it will use the default value and convert it to upper case.
+# key: some other string {{ value }} access the value of the variable at playbook level and concatenate it with some other string.
+
+
+- name: Task variables
+  hosts: localhost
+  tasks:
+    - name: Print a message
+      debug:
+        msg: "{{ message }}"
+      vars:
+        message: "Hello, Ansible!"
+
+# This variable is defined at the task level and is only available within this task.
+
+- name: Role variables
+  hosts: localhost
+  roles:
+    - demo
+# This variable is defined at the role level and is only available within this role.    
