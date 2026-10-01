@@ -1,0 +1,124 @@
+# Error Handling in Ansible 
+# This playbook demonstrates error handling in Ansible using the `ignore_errors` directive. It includes tasks that intentionally fail to show how to handle errors gracefully.
+- name: Error Handling Example
+  hosts: localhost
+  tasks:
+    - name: This task will succeed
+      debug:
+        msg: "This task will succeed."
+
+    - name: This task will fail but continue execution
+      command: /bin/false
+      ignore_errors: yes
+
+    - name: This task will also succeed
+      debug:
+        msg: "This task will also succeed, even after the previous failure."
+
+# Ignore errors can be useful in scenarios where you want to continue execution even if a task fails, but it should be used with caution as it may hide underlying issues.  
+# Similarly, you can use the `failed_when` directive to define custom failure conditions for tasks. This allows you to control when a task is considered failed based on specific criteria.
+# Similarly, you can use the `block` directive to group tasks together and apply error handling to the entire block. This allows you to handle errors for multiple tasks as a single unit.
+# Similarly, you can use the `rescue` directive to define tasks that should be executed if a task fails. This allows you to handle errors and perform cleanup or recovery actions.
+# Some other error handling techniques in Ansible include using the `always` directive to define tasks that should always be executed, regardless of whether previous tasks succeeded or failed, and using the `register` directive to capture the output of a task and use it in subsequent tasks for error handling or decision-making.
+# Few best practices for error handling in Ansible:
+# 1. Use error handling techniques judiciously and only when necessary, as they can make playbooks more complex and harder to maintain.
+# 2. Use clear and descriptive error messages to help identify the cause of failures. 
+# 3. Use logging and monitoring tools to track errors and failures in your playbooks, so that you can quickly identify and resolve issues.
+# Example of using `failed_when` directive to define custom failure conditions for tasks:
+- name: Custom failure condition example 
+  hosts: localhost
+  tasks:
+    - name: This task will fail if the command returns a non-zero exit code
+      command: /bin/false
+      register: result
+      failed_when: result.rc != 0
+
+    - name: This task will succeed if the previous task failed
+      debug:
+        msg: "The previous task failed, but we are handling it gracefully."
+      when: result is failed
+
+- name: Block example with error handling
+  hosts: localhost
+  tasks:
+    - block:
+        - name: This task will succeed
+          debug:
+            msg: "This task will succeed."
+
+        - name: This task will fail but continue execution
+          command: /bin/false
+          ignore_errors: yes
+
+      rescue:
+        - name: This task will be executed if the previous block fails
+          debug:
+            msg: "The previous block failed, but we are handling it gracefully."
+
+- name: Always example with error handling
+  hosts: localhost
+  tasks:
+    - name: This task will succeed
+      debug:
+        msg: "This task will succeed."
+
+    - name: This task will fail but continue execution
+      command: /bin/false
+      ignore_errors: yes
+
+    - name: This task will always be executed, regardless of previous failures
+      debug:
+        msg: "This task will always be executed, even if previous tasks failed."
+
+- name: Register example with error handling
+  hosts: localhost
+  tasks:
+    - name: This task will fail and register the result
+      command: /bin/false
+      register: result
+      ignore_errors: yes
+
+    - name: This task will be executed if the previous task failed
+      debug:
+        msg: "The previous task failed, but we are handling it gracefully. The result is {{ result }}."
+      when: result is failed
+
+- name: Error handling best practices
+  hosts: localhost
+  tasks:
+    - name: Use error handling techniques judiciously
+      debug:
+        msg: "Use error handling techniques judiciously and only when necessary, as they can make playbooks more complex and harder to maintain."
+
+    - name: Use clear and descriptive error messages
+      debug:
+        msg: "Use clear and descriptive error messages to help identify the cause of failures."
+
+    - name: Use logging and monitoring tools
+      debug:
+        msg: "Use logging and monitoring tools to track errors and failures in your playbooks, so that you can quickly identify and resolve issues."
+
+
+- name : Ignore error example
+  hosts: localhost
+  tasks:
+    - name: This task will fail but continue execution
+      command: /bin/false
+      ignore_errors: yes
+
+    - name: This task will also succeed
+      debug:
+        msg: "This task will also succeed, even after the previous failure." 
+
+- name: Ignore error from shell
+  hosts: localhost
+  tasks:
+    - name: Shell execution
+      shell: cat /etc/passwd | grep john
+      register: result
+      ignore_errors: yes
+    - name: This task will fail but continue execution
+      debug:
+        msg: "The previous task failed, but we are handling it gracefully. The result is {{ result }}."
+      when: result.rc != 0
+
