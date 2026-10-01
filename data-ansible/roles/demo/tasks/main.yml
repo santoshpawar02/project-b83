@@ -5,4 +5,4 @@
 
   - name: Role variables
     ansible.builtin.debug:
-      msg: Hello, Ansible Role variable! URL is "{{ URL }}" 
+      msg: "Hello, Ansible Role variable! URL is {{ URL }}" 

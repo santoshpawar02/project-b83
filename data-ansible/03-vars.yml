@@ -38,3 +38,31 @@
   roles:
     - demo
 # This variable is defined at the role level and is only available within this role.    
+
+# ansible-playbook 03-vars.yml -e message="cli variable" 
+# this will override the variable defined at playbook level and task level.
+# from command line, we can pass variables using -e or --extra-vars option.
+# if same variable is defined at multiple levels, ansible will use the value defined at the highest level.
+# precedence order of variable definition is: command line > playbook > role > task > inventory.
+
+
+# Variables are three types in ansible, 1. static variables, 2. dynamic variables, 3. facts.
+# static variables are defined in playbook, role, task or inventory and their values are fixed. example: message: "Hello, Ansible!"
+# dynamic variables are defined using jinja2 expressions and their values are calculated at runtime. example: message: "{{ ansible_hostname }}"     
+# facts are variables that are automatically discovered by ansible and their values are collected from the managed nodes. example: ansible_hostname, ansible_os_family, ansible_distribution, ansible_distribution_version, ansible_default_ipv4.address, etc.  
+
+# Also, there is Normal, list, and Map variables. 
+# Normal variables are defined using key-value pairs, list variables are defined using a list of values, and map variables are defined using a dictionary of key-value pairs.
+# Example of normal variable: message: "Hello, Ansible!"
+# Example of list variable: messages: ["Hello, Ansible!", "Hello, Ansible!"]  
+# Example of map variable: messages: { message1: "Hello, Ansible!", message2: "Hello, Ansible!" }
+
+# Variables have data types, string, integer, float, boolean, list, and dictionary.
+# Example of string variable: message: "Hello, Ansible!"
+# Example of integer variable: number: 10
+# Example of float variable: number: 10.5 
+# Example of boolean variable: flag: true
+# Example of list variable: messages: ["Hello, Ansible!", "Hello, Ansible!"]
+# Example of dictionary variable: messages: { message1: "Hello, Ansible!", message2: "Hello, Ansible!" }
+# Example of variable with jinja2 expression: message: "{{ ansible_hostname }}"
+# Example of variable with jinja2 expression and filter: message: "{{ ansible_hostname | upper }}"
